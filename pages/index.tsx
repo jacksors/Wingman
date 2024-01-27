@@ -12,7 +12,7 @@ export default function Home() {
       className={`flex min-h-screen flex-col items-center justify-between p-24 bg- ${inter.className}`}
     >
       <p>{user?.email}</p>
-      {!user ? <a href={"/api/auth/login"}><Button>Login</Button></a> : <a href={"/api/auth/logout"}><Button>Logout</Button></a>}
+      {!user ? <a href={"/api/auth/login?returnTo=/user/new"}><Button>Login</Button></a> : <a href={"/api/auth/logout"}><Button>Logout</Button></a>}
     </main>
   );
 }

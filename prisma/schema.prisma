@@ -11,8 +11,10 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id
   username  String   @unique
+  firstName String
+  lastName  String
   email     String   @unique
   reviews   Review[]
   flights   Flight[]
@@ -86,7 +88,7 @@ model Review {
   rating       Int
   reviewType   ReviewType
   user         User        @relation(fields: [userId], references: [id])
-  userId       Int
+  userId       String
   airport      Airport?    @relation("AirportReviews", fields: [airportId], references: [id])
   airportId    Int?
   tailNumber   TailNumber? @relation(fields: [tailNumberId], references: [id])
