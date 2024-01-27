@@ -41,7 +41,7 @@ export default function MainNav() {
         </div>
         <div className="hidden md:flex items-center">
           {!user ? (
-            <a href={"/api/auth/login"}>
+            <a href={"/api/auth/login?returnTo=/user/callback"}>
               <Button>Login</Button>
             </a>
           ) : (

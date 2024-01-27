@@ -66,7 +66,7 @@ export default function Home() {
           </h1>
           <div className="flex flex-col md:flex-row w-full h-fit justify-center items-center pt-2 gap-3 px-12 md:px-0">
             <Button className="w-full md:w-36">
-              <a href="/api/auth/login">Login or Sign Up</a>
+              <a href="/api/auth/login?returnTo=/user/callback">Login or Sign Up</a>
             </Button>
           </div>
         </div>
