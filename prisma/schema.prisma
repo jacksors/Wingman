@@ -18,8 +18,6 @@ model User {
   email     String   @unique
   reviews   Review[]
   flights   Flight[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Airline {
@@ -27,8 +25,6 @@ model Airline {
   name        String
   flights     Flight[]
   tailNumbers TailNumber[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
 }
 
 model Airport {
@@ -39,8 +35,6 @@ model Airport {
   reviews        Review[] @relation("AirportReviews")
   incomingRoutes Route[]  @relation("RouteDestination")
   outgoingRoutes Route[]  @relation("RouteOrigin")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
 }
 
 model Flight {
@@ -53,8 +47,6 @@ model Flight {
   route        Route      @relation("RouteFlights", fields: [routeId], references: [id])
   routeId      Int
   users        User[]
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
 }
 
 model TailNumber {
@@ -65,8 +57,6 @@ model TailNumber {
   airlineId Int
   reviews   Review[]
   flights   Flight[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Route {
@@ -77,8 +67,6 @@ model Route {
   destinationId Int
   flights       Flight[] @relation("RouteFlights")
   reviews       Review[] @relation("RouteReviews")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
 }
 
 model Review {
@@ -95,8 +83,8 @@ model Review {
   tailNumberId Int?
   route        Route?      @relation("RouteReviews", fields: [routeId], references: [id])
   routeId      Int?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime?    @default(now())
+  updatedAt    DateTime?    @updatedAt
 }
 
 enum ReviewType {
