@@ -30,6 +30,5 @@ jobs:
         run: |
           heroku git:remote --app wingman
           git push heroku +${GITHUB_REF#refs/heads/}:main
-          heroku run npx prisma migrate deploy
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
