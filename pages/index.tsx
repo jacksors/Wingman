@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <MainNav />
-      <main className={`flex min-h-screen flex-col items-center justify-between pt-24 bg- ${inter.className}`}>
+      <main className={`flex min-h-screen flex-col items-center justify-start pt-24 bg- ${inter.className}`}>
         <div className="relative flex flex-col w-full h-fit p-11 gap-3 items-center bg-secondary">
           <img src="/Logo2.png" alt="Wingman Logo" className="w-36 h-36" />
           {user ? 
@@ -23,7 +23,9 @@ export default function Home() {
           }
           <p className="text-xl">Journey Smarter: Connect, Plan, Fly!</p>
         </div>
-        <div className="flex flex-col w-full h-fit pb-11 gap-3 items-center">
+        {
+          user ?
+          <div className="flex flex-col w-full h-fit pb-11 gap-3 items-center">
           <h1 className="text-4xl pt-5">
             Get Started:
           </h1>
@@ -57,6 +59,19 @@ export default function Home() {
             </Card>
           </div>
         </div>
+        :
+        <div className="flex flex-col w-full h-fit pb-11 pt-10 gap-3 items-center">
+          <h1 className="text-4xl pb-2">
+            Login or Sign Up to Get Started:
+          </h1>
+          <div className="flex flex-col md:flex-row w-full h-fit justify-center items-center pt-2 gap-3 px-12 md:px-0">
+            <Button className="w-full md:w-36">
+              <a href="/api/auth/login">Login or Sign Up</a>
+            </Button>
+          </div>
+        </div>
+        }
+        
         <ModeToggle />
     </main>
     </>
