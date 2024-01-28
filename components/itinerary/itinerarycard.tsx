@@ -41,9 +41,13 @@ function findInitialOriginAndFinalDestination(itinerary: Itinerary): { initialOr
     const origins = new Set<string>();
     const destinations = new Set<string>();
 
+    let i = 0;
     for (const flight of itinerary.flights) {
         origins.add(flight.route.origin.code);
         destinations.add(flight.route.destination.code);
+        console.log(i++);
+        console.log(origins);
+        console.log(destinations);
     }
 
     let initialOrigin: string | null = null;
@@ -51,6 +55,7 @@ function findInitialOriginAndFinalDestination(itinerary: Itinerary): { initialOr
 
     origins.forEach(code => {
         if (!destinations.has(code)) {
+            console.log("missing");
             initialOrigin = code;
         }
     });

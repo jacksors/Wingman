@@ -41,7 +41,7 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
     useEffect(() => {
         console.log(localFlight);
         if (localFlight.date && localFlight.destinationCode && localFlight.originCode) {
-            const url = `/api/flights?from=${localFlight.destinationCode}&to=${localFlight.originCode}`;
+            const url = `/api/flights?from=${localFlight.originCode}&to=${localFlight.destinationCode}`;
             console.log(url);
             fetch(url).then(res => res.json()).then(data => {
                 setAvailableFlights(data);
