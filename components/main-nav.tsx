@@ -34,9 +34,6 @@ export default function MainNav() {
             <a href="/itineraries" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
               My Itineraries
             </a>
-            <a href="/flight" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
-              Flight Tracker
-            </a>
           </nav> 
           
         </div>
@@ -84,9 +81,6 @@ export default function MainNav() {
           </a>
           <a href="/itineraries" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
             My Itineraries
-          </a>
-          <a href="/flight" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors text-xl`}>
-            Flight Tracker
           </a>
           <div className="flex w-full justify-center">
           {!user ? (

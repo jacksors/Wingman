@@ -89,7 +89,7 @@ export default function ReviewHome() {
                                                         <p>{flight.route.destination.code}</p>
                                                         <Button>
                                                             <Link
-                                                                href={`/reviews/planes/${flight.tailNumberId}`}>Chat</Link>
+                                                                href={`/reviews/planes/${flight.tailNumberId}`}>Reviews</Link>
                                                         </Button>
                                                     </div>
                                                 )
@@ -116,7 +116,7 @@ export default function ReviewHome() {
                                                         <p>{airport.location}</p>
                                                         <div></div>
                                                         <Button>
-                                                            <Link href={`/reviews/airports/${airport.id}`}>Chat</Link>
+                                                            <Link href={`/reviews/airports/${airport.id}`}>Reviews</Link>
                                                         </Button>
                                                     </div>
                                                 )
