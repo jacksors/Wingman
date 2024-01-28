@@ -73,7 +73,7 @@ const Index = () => {
                             return (
                                 <Dialog key={'itinerary-' + index}>
                                     <DialogTrigger asChild>
-                                        <button>
+                                        <button className='w-full'>
                                             <ItineraryCard itinerary={itinerary}/>
                                         </button>
                                     </DialogTrigger>
