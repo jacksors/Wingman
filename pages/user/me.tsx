@@ -1,6 +1,7 @@
 import React, {ChangeEventHandler, FormEventHandler, useEffect, useState} from 'react';
 import {useUser} from "@auth0/nextjs-auth0/client";
 import type { User } from '@prisma/client';
+import { ModeToggle } from '@/components/mode-toggle';
 
 const Me =  () => {
     const [username, setUsername] = useState('');
@@ -101,9 +102,10 @@ const Me =  () => {
                         value={lastName}
                         onChange={handleLastnameChange}
                     />
-                    <button type="submit">Submit</button>
+                    <button className="mt-5 bg-accent p-3 rounded" type="submit">Submit</button>
                 </div>
             </form>
+            <ModeToggle />
         </div>
     );
 
