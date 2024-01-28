@@ -13,21 +13,17 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     userId: userId as string
                 },
-                select: {
+                include: {
                     flights: {
-                        select: {
+                        include: {
                             route: {
                                 select: {
                                     origin: true,
                                     destination: true,
                                 }
                             },
-                            departTime: true,
-                            arriveTime: true,
                         }
                     },
-                    id: true,
-                    userId: true,
                 },
             })
             res.status(200).json(itineraries)

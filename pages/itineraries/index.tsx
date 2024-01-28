@@ -21,7 +21,19 @@ const Index = () => {
 
     useEffect(() => {
         if (wingmanUser) {
-            fetch(`/users/${wingmanUser.id}/itineraries`).then(res => res.json()).then(data => {
+            fetch(`/api/users/${wingmanUser.id}/itineraries`).then(res => res.json()).then(data => {
+                let newItems;
+                console.log(data);
+                newItems = data.map(iten => {
+                    const newFlights = iten.flights.map(flight => {
+                        flight.departTime = new Date(flight.departTime);
+                        flight.arriveTime = new Date(flight.arriveTime);
+                        return flight;
+                    })
+                    iten.flights = newFlights;
+                    return iten;
+                })
+                console.log(newItems);
                 setItineraries(data);
             })
         }
@@ -31,8 +43,8 @@ const Index = () => {
     return (
         <div className='flex flex-col justify-center items-center'>
             <h1>Current itineraries</h1>
-            {itineraries.map(itinerary => {
-                return <ItineraryCard itinerary={itinerary} />
+            {itineraries.map((itinerary, index) => {
+                return <ItineraryCard key={'itinerary-' + index} itinerary={itinerary} />
             })}
             <Button><Link href='/itineraries/create'>Create new</Link></Button>
         </div>

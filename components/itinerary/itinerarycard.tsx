@@ -101,13 +101,13 @@ export const ItineraryCard = (props: Props) => {
                 <span className="material-symbols-outlined">
                     flight_takeoff
                 </span>
-                <p>{initialOrigin} - {departTime.toDateString()}</p>
+                <p>{initialOrigin} - {departTime?.toDateString()}</p>
             </div>
             <div className="flex flex-row">
                 <span className="material-symbols-outlined">
                     flight_land
                 </span>
-                <p>{finalDestination} - {arriveTime.toDateString()}</p>
+                <p>{finalDestination} - {arriveTime?.toDateString()}</p>
             </div>
         </Card>
     );
