@@ -20,7 +20,7 @@ export default function Home() {
 			>
 				<div className="relative flex flex-col w-full h-fit p-11 gap-2 items-center bg-secondary">
 					<img
-						src="/Logo2.png"
+						src="/Logo.png"
 						alt="Wingman Logo"
 						className={`w-36 h-36 bg-black ${
 							theme === 'dark' ? 'bg-opacity-0' : 'bg-opacity-10'
