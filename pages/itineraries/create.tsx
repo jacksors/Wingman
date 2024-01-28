@@ -121,8 +121,8 @@ const Create = () => {
     }
 
     return (
-            <div className={'flex flex-col justify-center items-center m-4 pt-20'}>
-                <div className={'flex flex-row flex-wrap justify-center items-center gap-5'}>
+        <div className={'flex flex-col justify-center items-center m-4 pt-20'}>
+            <div className={'flex flex-row flex-wrap justify-center items-center gap-5'}>
                 {routes.map((route, index) => (
                     <FlightAdd key={index} airports={airports} deleteCallback={deleteFlight(index)} setFlightCallback={updateFlightNoAndDates(index)} />
                 ))}
