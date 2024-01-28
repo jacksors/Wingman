@@ -58,15 +58,16 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
     }
 
     return (
-        <div className={'m-2'}>
+        <div className={'flex flex-row flex-wrap'}>
             <Card className={'flex flex-col justify-center items-center p-4 bg-secondary'}>
-                <div className={'grid grid-cols-3 items-center justify-items-center mb-2 w-full'}>
-                    <Button className='p-2 bg-red-500 shadow' onClick={deleteThis}>
+                <div className={'flex flex-row items-center justify-center mb-2 w-full'}>
+                    <div className='w-1/6 '> </div>
+                    <h2 className={'text-xl text-center w-2/3'}>Date</h2>
+                    <Button className='w-1/6 bg-destructive' onClick={deleteThis}>
                         <span className="material-symbols-outlined">
                             close
                         </span>
                     </Button>
-                    <h2 className={'text-xl'}>Date</h2>
                 </div>
                 <Calendar
                     mode="single"
@@ -75,7 +76,7 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
                     className={'rounded-md border shadow bg-blue-900 bg-background drop-shadow-md'}
 
                 />
-                <h2 className={'text-xl mt-4'}>Origin airport</h2>
+                <h2 className={'text-xl mt-4 pb-2'}>Origin airport</h2>
                 <Popover open={originOpen} onOpenChange={setOriginOpen}>
                     <PopoverTrigger asChild>
                         <Button
@@ -111,7 +112,7 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
                         </Command>
                     </PopoverContent>
                 </Popover>
-                <h2 className={'text-xl mt-4'}>Destination airport</h2>
+                <h2 className={'text-xl mt-4 pb-2'}>Destination airport</h2>
                 <Popover open={destinationOpen} onOpenChange={setDestinationOpen}>
                     <PopoverTrigger asChild>
                         <Button
