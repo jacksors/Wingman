@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { ReviewType } from "@prisma/client";
 import {NextApiRequest, NextApiResponse} from "next";
 
 const handle = async (req: NextApiRequest, res: NextApiResponse) => {

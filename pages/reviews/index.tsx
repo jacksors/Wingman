@@ -130,7 +130,7 @@ export default function ReviewHome() {
                     }
                 </div> :
                 <div className='flex flex-row justify-center items-center h-screen'>
-                    <p className='text-2xl'>Please login to chat with fellow wingmen!</p>
+                    <p className='text-2xl'>Please login to view and leave reviews!</p>
                 </div>}
         </div>
   );
