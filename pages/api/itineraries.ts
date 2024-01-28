@@ -67,6 +67,26 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
             });
 
             res.status(200).json(create);
+            break;
+        }
+        case 'DELETE': {
+            const {id} = req.query;
+            if (!id) return res.status(400).json({message: 'Itinerary ID is required'});
+            if (typeof id !== 'string') return res.status(400).json({message: 'Itinerary ID must be a string'});
+            const itineraryId = parseInt(id);
+            const itinerary = await prisma.itenerary.findFirst({
+                where: {
+                    id: itineraryId
+                }
+            });
+            if (!itinerary) return res.status(400).json({message: 'Itinerary not found'});
+            const deleteItinerary = await prisma.itenerary.delete({
+                where: {
+                    id: itineraryId
+                }
+            });
+            res.status(200).json(deleteItinerary);
+            break;
         }
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
 
 export interface Props {
     itinerary: {
@@ -22,8 +23,10 @@ export interface Props {
                     location: string
                 }
             }
-        }[]
-    };
+        }[],
+    },
+    isOnItineraryIndex?: boolean,
+    deleteCallback?: () => void
 }
 
 type Itinerary = {
@@ -116,6 +119,16 @@ export const ItineraryCard = (props: Props) => {
                 <p className='text-3xl'>{finalDestination}</p>
                 <p>{arriveTime?.toDateString()}</p>
             </div>
+            {
+                props.isOnItineraryIndex
+                    ? (<Button className='bg-destructive' onClick={props.deleteCallback}>
+                            <span className="material-symbols-outlined">
+                                close
+                            </span>
+                        </Button>)
+                    : <></>
+            }
+
         </Card>
     );
 };
