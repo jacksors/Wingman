@@ -1,30 +1,20 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Airport, Flight, Itenerary } from "@prisma/client";
-
-interface ItineraryWithFlightInfo extends Itenerary {
-    flights: FlightWithOriginAndDest[];
-}
-
-interface FlightWithOriginAndDest extends Flight {
-  route: {
-    origin: Airport;
-    destination: Airport;
-  };
-  originAverageRating: number;
-  destinationAverageRating: number;
-}
+import { ItineraryWithAverages } from "@/types/itineraries";
+import { Card } from "@/components/ui/card";
+import { ItineraryCard } from "@/components/itinerary/itinerarycard";
 
 export default function ReviewHome() {
   const { user } = useUser();
-  const [itineraries, setItineraries] = useState<ItineraryWithFlightInfo[]>([]);
+  const [itineraries, setItineraries] = useState<ItineraryWithAverages[]>([]);
 
   const fetchItineraries = async () => {
     fetch(`/api/users/${user?.sub}/itineraries`, {
       method: "GET",
     }).then((res) => {
       if (res.status === 200) {
-        res.json().then((data: ItineraryWithFlightInfo[]) => {
+        res.json().then((data: ItineraryWithAverages[]) => {
           setItineraries(data);
           console.log(data);
         });
@@ -34,59 +24,11 @@ export default function ReviewHome() {
     });
   }
 
-  const fetchAverageRatings = async (itinerary : ItineraryWithFlightInfo) => {
-    const flights = itinerary.flights;
-    var updatedFlights : FlightWithOriginAndDest[] = [];
-    for (const flight of flights) {
-      var updatedFlight = flight;
-      const airportId = flight.route.destination.id;
-      fetch(`/api/airports/${airportId}/reviews/average`, {
-        method: "GET",
-      }).then((res) => {
-        if (res.status === 200) {
-          res.json().then((data: number) => {
-            updatedFlight.destinationAverageRating = data;
-          });
-        } else {
-          return null;
-        }
-      });
-
-      const tailNumberId = flight.tailNumberId;
-      fetch(`/api/planes/${tailNumberId}/reviews/average`, {
-        method: "GET",
-      }).then((res) => {
-        if (res.status === 200) {
-          res.json().then((data: number) => {
-            updatedFlight.originAverageRating = data;
-          });
-        } else {
-          return null;
-        }
-      });
-      updatedFlights.push(updatedFlight);
-    }
-    setItineraries(itineraries.map((itinerary) => {
-      for (const flight of itinerary.flights) {
-        if (flight.id === updatedFlights[0].id) {
-          itinerary.flights = updatedFlights;
-        }
-      }
-      return itinerary;
-    }
-    ));
-  }
-
-
   useEffect(() => {
-    fetchItineraries()
+    if (user) {
+      fetchItineraries();
+    }
   }, [user]);
-
-  useEffect(() => {
-    for (const itinerary of itineraries) {
-      fetchAverageRatings(itinerary);
-    }
-  }, [itineraries]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -97,17 +39,12 @@ export default function ReviewHome() {
 
         <p className="mt-3 text-2xl">
           Your itineraries:{" "}
-          {itineraries.map((itinerary) => (
-            <div key={itinerary.id}>
-              {
-                itinerary.flights.map((flight) => (
-                  <div key={flight.id}>
-                    {flight.originAverageRating}
-                  </div>
-                ))
-              }
-            </div>
-          ))}
+          {itineraries.map((itinerary, index) => {
+            return (
+                <ItineraryCard key={'itinerary-' + index}  itineraryWithAverages={itinerary} />
+  
+            );
+            })}
         </p>
       </main>
     </div>

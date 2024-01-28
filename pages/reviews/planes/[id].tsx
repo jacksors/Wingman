@@ -57,7 +57,7 @@ export default function PlaneReviews() {
 	}, [id]);
 
 	return (
-		<div className={`flex flex-col ${inter.className} justify-center items-center`}>
+		<div className={`flex flex-col ${inter.className} justify-center items-center pt-20`}>
       {
         tailNumber.id === -2 ?
         <p className='text-2xl text-center pt-5'>Plane not found!</p>
