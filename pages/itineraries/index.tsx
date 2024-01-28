@@ -39,6 +39,12 @@ const Index = () => {
         }
     }, [wingmanUser])
 
+    if (!user) return (
+        <div className='flex flex-col justify-center items-center gap-5 px-24 py-12 pt-24'>
+            <p className='text-xl text-gray-700 italic'>Please log in to view your itineraries!</p>
+            <Button className='fixed bottom-3'><Link href='/api/auth/login?redirectTo=/users/callback'>Log In</Link></Button>
+        </div>
+    )
 
     return (
         <div className='flex flex-col justify-center items-center gap-5 px-24 py-12 pt-24'>
