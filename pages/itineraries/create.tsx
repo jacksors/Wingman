@@ -121,24 +121,28 @@ const Create = () => {
     }
 
     return (
-            <div className={'flex flex-col justify-center items-center m-4'}>
+            <div className={'flex flex-col justify-center items-center m-4 pt-20'}>
+                <div className={'flex flex-row flex-wrap justify-center items-center gap-5'}>
                 {routes.map((route, index) => (
                     <FlightAdd key={index} airports={airports} deleteCallback={deleteFlight(index)} setFlightCallback={updateFlightNoAndDates(index)} />
                 ))}
-                <Button
-                    className={'mt-4 bg-accent p-3 rounded'}
-                    onClick={() => {
-                        setRoutes([...routes, {originCode: '', destinationCode: ''}]);
-                        setFlightNoAndDates([...flightNoAndDates, {flightNo: '', date: new Date(), originCode: '', destinationCode: ''}]);
-                    }}
-                    >
-                    Add flight
-                </Button>
-                <Button
-                    className={'mt-4 bg-accent p-3 rounded'}
-                    onClick={onSubmit}>
-                    Submit
-                </Button>
+                </div>
+                <div className='flex flex-row bottom-5 fixed gap-5'>
+                    <Button
+                        className={'mt-4 shadow outline-accent outline bg-secondary text-foreground hover:bg-background p-3 rounded'}
+                        onClick={() => {
+                            setRoutes([...routes, {originCode: '', destinationCode: ''}]);
+                            setFlightNoAndDates([...flightNoAndDates, {flightNo: '', date: new Date(), originCode: '', destinationCode: ''}]);
+                        }}
+                        >
+                        Add flight
+                    </Button>
+                    <Button
+                        className={'mt-4 shadow outline-accent outline bg-foreground text-secondary p-3 rounded'}
+                        onClick={onSubmit}>
+                        Submit
+                    </Button>
+                </div>
             </div>
     );
 };

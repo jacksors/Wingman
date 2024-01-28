@@ -41,12 +41,12 @@ const Index = () => {
 
 
     return (
-        <div className='flex flex-col justify-center items-center'>
-            <h1>Current itineraries</h1>
+        <div className='flex flex-col justify-center items-center gap-5 px-24 py-12 pt-24'>
+            <h1 className='text-3xl'>Current Itineraries</h1>
             {itineraries.map((itinerary, index) => {
                 return <ItineraryCard key={'itinerary-' + index} itinerary={itinerary} />
             })}
-            <Button><Link href='/itineraries/create'>Create new</Link></Button>
+            <Button className='fixed bottom-3'><Link href='/itineraries/create'>Create New Itinerary</Link></Button>
         </div>
     );
 };
