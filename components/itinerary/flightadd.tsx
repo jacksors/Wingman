@@ -7,6 +7,8 @@ import {ButtonIcon, CaretSortIcon, CheckIcon} from "@radix-ui/react-icons";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
 import {cn} from "@/lib/utils";
 import {Calendar} from "@/components/ui/calendar";
+import {Inter} from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 
 export interface Props {
     key: number;
@@ -24,7 +26,7 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
     const [destinationOpen, setDestinationOpen] = React.useState(false);
 
     const [date, setDate] = useState<Date | undefined>(undefined);
-
+    const inter = Inter({ subsets: ["latin"] });
     const [localFlight, setLocalFlight] = useState<{flightNo: string, date: Date | null, originCode: string, destinationCode: string}>({flightNo: '', date: null, originCode: '', destinationCode: ''});
 
     useEffect(() => {
@@ -58,7 +60,7 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
     }
 
     return (
-        <div className={'flex flex-row flex-wrap'}>
+        <div className={'flex flex-row flex-wrap' + inter.className}>
             <Card className={'flex flex-col justify-center items-center p-4 bg-secondary'}>
                 <div className={'flex flex-row items-center justify-center mb-2 w-full'}>
                     <div className='w-1/6 '> </div>
