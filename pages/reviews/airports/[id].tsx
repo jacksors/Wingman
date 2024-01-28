@@ -4,9 +4,27 @@ import { Inter } from 'next/font/google';
 import { Review, Airport, User } from '@prisma/client';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Card } from '@/components/ui/card';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+	DialogClose,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { set } from 'date-fns';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export default function AirportReviews() {
+	const { user } = useUser();
 	const { id } = useRouter().query;
 	const [reviews, setReviews] = useState<Review[]>([]);
 	const [averageRating, setAverageRating] = useState<number>(0);
@@ -16,7 +34,40 @@ export default function AirportReviews() {
 		name: '',
 		location: '',
 	});
+	const [title, setTitle] = useState<string>('');
+	const [content, setContent] = useState<string>('');
+	const [rating, setRating] = useState<number>(0);
 	const [users, setUsers] = useState<{ [key: string]: User }>({});
+
+	const handleSubmit = () => {
+		let newReview = JSON.stringify({
+			title,
+			content,
+			rating,
+			userId: user?.sub
+		});
+		console.log(newReview);
+		fetch(`/api/airports/${id}/reviews/add`, {
+			method: 'POST',
+			body: JSON.stringify({
+				title,
+				content,
+				rating,
+				userId: user?.sub
+			}),
+		}).then((res) => {
+			res.json().then(data => {
+				console.log(data);
+				if (data.id) {
+					setReviews([...reviews, data]);
+					setTitle('');
+					setContent('');
+					setRating(0);
+				}
+			})
+		});
+	}
+
 	useEffect(() => {
 		if (id) {
 			fetch(`/api/airports/${id}/reviews`, {
@@ -171,8 +222,35 @@ export default function AirportReviews() {
 							)}
 						</>
 					)}
+					
 				</>
 			)}
+			<Dialog>
+					<DialogTrigger asChild><div className='w-full flex justify-center'><Button className="w-full md:w-36 fixed bottom-5">Add Review</Button></div>
+					</DialogTrigger>
+					<DialogContent className={`${inter.className} bg-secondary`}>
+						<div className='flex flex-col gap-2 justify-center items-center gap-3'>
+							<h1 className='text-3xl'>Add A Review</h1>
+								<input type="text" placeholder="Title" className="w-full h-10 p-2 bg-secondary border-2 border-foreground rounded-md" onChange={(change) => setTitle(change.target.value)}/>
+								<Select onValueChange={(value) => setRating(parseInt(value))}>
+									<SelectTrigger className="w-[180px]">
+										<SelectValue placeholder="Rating" />
+									</SelectTrigger>
+									<SelectContent className={`${inter.className }`}>
+										<SelectItem value="1">1</SelectItem>
+										<SelectItem value="2">2</SelectItem>
+										<SelectItem value="3">3</SelectItem>
+										<SelectItem value="4">4</SelectItem>
+										<SelectItem value="5">5</SelectItem>
+									</SelectContent>
+								</Select>
+								<textarea placeholder="Content" className=" w-full h-28 p-2 bg-secondary border-2 border-foreground rounded-md" onChange={change => setContent(change.target.value)}/>
+								<DialogClose asChild>
+									<Button className="w-full md:w-36" onClick={handleSubmit}>Submit</Button>
+								</DialogClose>
+						</div>
+					</DialogContent>
+				</Dialog>
 			<ModeToggle />
 		</div>
 	);

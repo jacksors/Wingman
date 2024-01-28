@@ -8,7 +8,8 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!id) return res.status(400).json({ message: "Airport ID is required" });
         if (typeof id !== "string") return res.status(400).json({ message: "Airport ID must be a string" });
         const airportId = parseInt(id);
-        const { title, content, rating, userId } = req.body;
+        console.log(req.body);
+        const { title, content, rating, userId } = JSON.parse(req.body);
         if (!title) return res.status(400).json({ message: "Title is required" });
         if (!content) return res.status(400).json({ message: "Content is required" });
         if (!rating) return res.status(400).json({ message: "Rating is required" });
