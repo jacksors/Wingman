@@ -15,9 +15,6 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 	DialogClose,
 } from "@/components/ui/dialog"
@@ -43,6 +40,13 @@ export default function AirportReviews() {
 	const [users, setUsers] = useState<{ [key: string]: User }>({});
 
 	const handleSubmit = () => {
+		let newReview = JSON.stringify({
+			title,
+			content,
+			rating,
+			userId: user?.sub
+		});
+		console.log(newReview);
 		fetch(`/api/airports/${id}/reviews/add`, {
 			method: 'POST',
 			body: JSON.stringify({
@@ -52,7 +56,15 @@ export default function AirportReviews() {
 				userId: user?.sub
 			}),
 		}).then((res) => {
-
+			res.json().then(data => {
+				console.log(data);
+				if (data.id) {
+					setReviews([...reviews, data]);
+					setTitle('');
+					setContent('');
+					setRating(0);
+				}
+			})
 		});
 	}
 
@@ -214,18 +226,17 @@ export default function AirportReviews() {
 				</>
 			)}
 			<Dialog>
-					<DialogTrigger><div className='w-full flex justify-center'><Button className="w-full md:w-36 fixed bottom-5">Add Review</Button></div>
+					<DialogTrigger asChild><div className='w-full flex justify-center'><Button className="w-full md:w-36 fixed bottom-5">Add Review</Button></div>
 					</DialogTrigger>
 					<DialogContent className={`${inter.className} bg-secondary`}>
 						<div className='flex flex-col gap-2 justify-center items-center gap-3'>
 							<h1 className='text-3xl'>Add A Review</h1>
-								<input type="text" placeholder="Title" className="w-full h-10 p-2 bg-secondary border-2 border-foreground rounded-md" />
+								<input type="text" placeholder="Title" className="w-full h-10 p-2 bg-secondary border-2 border-foreground rounded-md" onChange={(change) => setTitle(change.target.value)}/>
 								<Select onValueChange={(value) => setRating(parseInt(value))}>
 									<SelectTrigger className="w-[180px]">
 										<SelectValue placeholder="Rating" />
 									</SelectTrigger>
 									<SelectContent className={`${inter.className }`}>
-										<SelectItem value="0">0</SelectItem>
 										<SelectItem value="1">1</SelectItem>
 										<SelectItem value="2">2</SelectItem>
 										<SelectItem value="3">3</SelectItem>
@@ -233,7 +244,7 @@ export default function AirportReviews() {
 										<SelectItem value="5">5</SelectItem>
 									</SelectContent>
 								</Select>
-								<input type="text" placeholder="Content" className=" w-full h-28 p-2 bg-secondary border-2 border-foreground rounded-md" />
+								<textarea placeholder="Content" className=" w-full h-28 p-2 bg-secondary border-2 border-foreground rounded-md" onChange={change => setContent(change.target.value)}/>
 								<DialogClose asChild>
 									<Button className="w-full md:w-36" onClick={handleSubmit}>Submit</Button>
 								</DialogClose>
