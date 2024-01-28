@@ -64,84 +64,86 @@ const Index = () => {
     }, [itineraries])
 
     return (
-        <div className={'pt-20'}>
+        <div>
             {wingmanUser ?
-            <div className='flex flex-row justify-center items-center'>
-                {itineraries.length > 0 ?
-                    itineraries.map((itinerary, index) => {
-                        return (
-                            <Dialog key={'itinerary-' + index}>
-                                <DialogTrigger asChild>
-                                    <button>
-                                        <ItineraryCard itinerary={itinerary} />
-                                    </button>
-                                </DialogTrigger>
-                                <DialogContent className={inter.className}>
-                                    <DialogHeader className={'text-2xl'}>
-                                        Flights
-                                    </DialogHeader>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <div className={'grid grid-cols-4 items-center w-full'}>
+                <div className='flex flex-col justify-center items-center gap-5 px-24 py-12 pt-24 w-full'>
+                    <h1 className='text-xl text-gray-700 italic'>Click an itinerary to start chatting!</h1>
+                    {itineraries.length > 0 ?
+                        itineraries.map((itinerary, index) => {
+                            return (
+                                <Dialog key={'itinerary-' + index}>
+                                    <DialogTrigger asChild>
+                                        <button>
+                                            <ItineraryCard itinerary={itinerary}/>
+                                        </button>
+                                    </DialogTrigger>
+                                    <DialogContent className={inter.className}>
+                                        <DialogHeader className={'text-2xl'}>
+                                            Flights
+                                        </DialogHeader>
+                                        <div className='flex flex-col justify-center items-center'>
+                                            <div className={'grid grid-cols-4 items-center w-full'}>
                                             <span className="material-symbols-outlined">
                                                 pin
                                             </span>
-                                            <span className="material-symbols-outlined">
+                                                <span className="material-symbols-outlined">
                                                 flight_takeoff
                                             </span>
-                                            <span className="material-symbols-outlined">
+                                                <span className="material-symbols-outlined">
                                                 flight_land
                                             </span>
+                                            </div>
+                                            {itinerary.flights.map((flight, index) => {
+                                                return (
+                                                    <div className='grid grid-cols-4 items-center w-full my-2'
+                                                         key={'flight-' + index}>
+                                                        <p>{flight.flightNumber}</p>
+                                                        <p>{flight.route.origin.code}</p>
+                                                        <p>{flight.route.destination.code}</p>
+                                                        <Button>
+                                                            <Link
+                                                                href={`/social/planes/${flight.tailNumberId}`}>Chat</Link>
+                                                        </Button>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
-                                        {itinerary.flights.map((flight, index) => {
-                                            return (
-                                                <div className='grid grid-cols-4 items-center w-full my-2'
-                                                     key={'flight-' + index}>
-                                                    <p>{flight.flightNumber}</p>
-                                                    <p>{flight.route.origin.code}</p>
-                                                    <p>{flight.route.destination.code}</p>
-                                                    <Button>
-                                                        <Link href={`/social/planes/${flight.tailNumberId}`}>Chat</Link>
-                                                    </Button>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                    <DialogHeader className={'text-2xl'}>
-                                        Airports
-                                    </DialogHeader>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <div className={'grid grid-cols-4 items-center w-full'}>
+                                        <DialogHeader className={'text-2xl'}>
+                                            Airports
+                                        </DialogHeader>
+                                        <div className='flex flex-col justify-center items-center'>
+                                            <div className={'grid grid-cols-4 items-center w-full'}>
                                             <span className="material-symbols-outlined">
                                                 pin
                                             </span>
-                                            <span className="material-symbols-outlined">
+                                                <span className="material-symbols-outlined">
                                                 map
                                             </span>
-                                            <div></div>
+                                                <div></div>
+                                            </div>
+                                            {airports.map((airport, index) => {
+                                                return (
+                                                    <div className='grid grid-cols-4 items-center w-full my-2'
+                                                         key={'airport-' + index}>
+                                                        <p>{airport.code}</p>
+                                                        <p>{airport.location}</p>
+                                                        <div></div>
+                                                        <Button>
+                                                            <Link href={`/social/airports/${airport.id}`}>Chat</Link>
+                                                        </Button>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
-                                        {airports.map((airport, index) => {
-                                            return (
-                                                <div className='grid grid-cols-4 items-center w-full my-2'
-                                                     key={'airport-' + index}>
-                                                    <p>{airport.code}</p>
-                                                    <p>{airport.location}</p>
-                                                    <div></div>
-                                                    <Button>
-                                                        <Link href={`/social/airports/${airport.id}`}>Chat</Link>
-                                                    </Button>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </DialogContent>
-                            </Dialog>
-                        )
-                    }) :
-                    <p className='text-2xl'>No Itineraries</p>
-                }
-            </div> :
+                                    </DialogContent>
+                                </Dialog>
+                            )
+                        }) :
+                        <p className='text-2xl'>No Itineraries</p>
+                    }
+                </div> :
                 <div className='flex flex-row justify-center items-center h-screen'>
-                    <p className='text-2xl'>Please login to view your itineraries</p>
+                    <p className='text-2xl'>Please login to chat with fellow wingmen!</p>
                 </div>}
         </div>
     );
