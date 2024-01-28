@@ -6,12 +6,30 @@ import MainNav from '@/components/main-nav';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Card } from '@/components/ui/card';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { User } from '@prisma/client';
+import { use } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
 	const { user, error, isLoading } = useUser();
+	const [wingmanUser, setWingmanUser] = useState<User>();
 	const { theme } = useTheme();
+
+	useEffect(() => {
+		fetch(`/api/users/${user?.sub}`, {
+			method: 'GET',
+		}).then((res) => {
+			if (res.status === 200) {
+				res.json().then((data: User) => {
+					setWingmanUser(data);
+				});
+			} else {
+				return null;
+			}
+		})}, [isLoading]);
+
 	return (
 		<>
 			<MainNav />
@@ -27,8 +45,8 @@ export default function Home() {
 						} p-3 rounded-full `}
 					/>
 					{user ? (
-						<p className="text-4xl">
-							Welcome to Wingman, {user?.name?.split(' ')[0]}!
+						<p className="text-4xl text-center">
+							Welcome to Wingman{wingmanUser ? (", " + wingmanUser?.firstName) : ""}!
 						</p>
 					) : (
 						<p className="text-4xl">Welcome to Wingman!</p>
