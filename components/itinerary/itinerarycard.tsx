@@ -96,7 +96,7 @@ export const ItineraryCard = (props: Props) => {
     const { departTime, arriveTime } = findEarliestLatestTimes(props.itinerary);
 
     return (
-        <Card className="flex flex-col">
+        <Card className="flex flex-col m-8">
             <div className="flex flex-row">
                 <span className="material-symbols-outlined">
                     flight_takeoff

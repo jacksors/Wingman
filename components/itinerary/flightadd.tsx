@@ -3,7 +3,7 @@ import {Airport, Flight, Route, User} from "@prisma/client";
 import {Card} from "@/components/ui/card";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Button} from "@/components/ui/button";
-import {CaretSortIcon, CheckIcon} from "@radix-ui/react-icons";
+import {ButtonIcon, CaretSortIcon, CheckIcon} from "@radix-ui/react-icons";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
 import {cn} from "@/lib/utils";
 import {Calendar} from "@/components/ui/calendar";
@@ -12,9 +12,10 @@ export interface Props {
     key: number;
     airports: Airport[];
     setFlightCallback: (flight: { flightNo: string, date: Date, originCode: string, destinationCode: string }) => void;
+    deleteCallback: () => void;
 };
 
-export function FlightAdd({airports, setFlightCallback}: Props) {
+export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) {
     const [flightNoOpen, setFlightNoOpen] = React.useState(false);
     const [flightNo, setFlightNo] = React.useState<string>('');
     const [originCode, setOriginCode] = React.useState<string>('');
@@ -48,15 +49,31 @@ export function FlightAdd({airports, setFlightCallback}: Props) {
         }
     }, [localFlight])
 
+    const deleteThis = () => {
+        setFlightNo('');
+        setDate(undefined);
+        setOriginCode('');
+        setDestinationCode('');
+        deleteCallback();
+    }
+
     return (
-        <div>
-            <Card className={'flex flex-col justify-center items-center'}>
-                <h2 className={'text-xl mt-4'}>Date</h2>
+        <div className={'m-2'}>
+            <Card className={'flex flex-col justify-center items-center p-4 bg-secondary'}>
+                <div className={'grid grid-cols-3 items-center justify-items-center mb-2 w-full'}>
+                    <Button className='p-2 bg-red-500 shadow' onClick={deleteThis}>
+                        <span className="material-symbols-outlined">
+                            close
+                        </span>
+                    </Button>
+                    <h2 className={'text-xl'}>Date</h2>
+                </div>
                 <Calendar
                     mode="single"
                     selected={date}
                     onSelect={setDate}
-                    className={'rounded-md border shadow'}
+                    className={'rounded-md border shadow bg-blue-900 bg-background drop-shadow-md'}
+
                 />
                 <h2 className={'text-xl mt-4'}>Origin airport</h2>
                 <Popover open={originOpen} onOpenChange={setOriginOpen}>

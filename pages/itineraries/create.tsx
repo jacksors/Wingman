@@ -35,7 +35,7 @@ const Create = () => {
         }
     }, [wingmanUser])
 
-    const updateFlightNoAndDates = (index: number, newFlight: { flightNo: string, date: Date, originCode: string, destinationCode: string }) => {
+    const updateFlightNoAndDates = (index: number) => (newFlight: { flightNo: string, date: Date, originCode: string, destinationCode: string }) => {
         console.log(newFlight)
         const updatedFlightNoAndDates = flightNoAndDates.map((flight, i) => i === index ? newFlight : flight);
         setFlightNoAndDates(updatedFlightNoAndDates);
@@ -113,11 +113,17 @@ const Create = () => {
         }
     };
 
+    const deleteFlight = (index: number) => () => {
+        const updatedRoutes = routes.filter((_, i) => i !== index);
+        const updatedFlightNoAndDates = flightNoAndDates.filter((_, i) => i !== index);
+        setRoutes(updatedRoutes);
+        setFlightNoAndDates(updatedFlightNoAndDates);
+    }
+
     return (
-        <div>
-            <Card className={'flex flex-col justify-center items-center'}>
+            <div className={'flex flex-col justify-center items-center m-4'}>
                 {routes.map((route, index) => (
-                    <FlightAdd key={index} airports={airports} setFlightCallback={newFlight => updateFlightNoAndDates(index, newFlight)} />
+                    <FlightAdd key={index} airports={airports} deleteCallback={deleteFlight(index)} setFlightCallback={updateFlightNoAndDates(index)} />
                 ))}
                 <Button
                     className={'mt-4 bg-accent p-3 rounded'}
@@ -133,8 +139,7 @@ const Create = () => {
                     onClick={onSubmit}>
                     Submit
                 </Button>
-            </Card>
-        </div>
+            </div>
     );
 };
 
