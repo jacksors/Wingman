@@ -58,7 +58,7 @@ export default function PlaneChatroom() {
 		return () => clearInterval(interval);
 	}, [id]);
 
-	const sendMessage = async (e) => {
+	const sendMessage = async (e : any) => {
 		e.preventDefault();
 		console.log(user);
 		const content = e.target.message.value;
