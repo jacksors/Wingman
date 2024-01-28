@@ -62,7 +62,6 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
                     },
                 },
             })
-            res.status(200).json(itineraries)
 
             // Get average review for airports
             let itinerariesWithAverages: ItineraryWithAverages[] = [];

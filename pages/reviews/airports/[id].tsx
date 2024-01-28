@@ -66,7 +66,7 @@ export default function AirportReviews() {
 
 	return (
 		<div
-			className={`flex flex-col h-full ${inter.className} justify-center items-center`}
+			className={`flex flex-col h-full ${inter.className} justify-center items-center pt-20`}
 		>
 			{airport?.id === -2 ? (
 				<p className="text-2xl text-center pt-5 w-full h-full">

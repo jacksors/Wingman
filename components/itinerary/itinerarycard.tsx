@@ -23,8 +23,6 @@ export interface Props {
                 }
             }
         }[]
-        social: boolean,
-        reviews: boolean
     };
 }
 
