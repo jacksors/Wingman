@@ -4,6 +4,7 @@ import {Airport, Flight, Route, User} from "@prisma/client";
 import {useUser} from "@auth0/nextjs-auth0/client";
 import {FlightAdd} from "@/components/itinerary/flightadd";
 import {Button} from "@/components/ui/button";
+import {useRouter} from "next/router";
 
 const Create = () => {
     const [routes, setRoutes] = useState<{ originCode: string, destinationCode: string }[]>([]);
@@ -14,6 +15,8 @@ const Create = () => {
 
     const { user, isLoading } = useUser();
     const [wingmanUser, setWingmanUser] = useState<User | null>(null);
+
+    const router = useRouter();
 
     useEffect(() => {
         if (!isLoading && user) {
@@ -66,7 +69,9 @@ const Create = () => {
         }
 
         // If there's no starting point, the route is circular and not contiguous
-        if (start === null) return false;
+        if (start === null) {
+            return false;
+        }
 
         // Step 4: Follow the route
         let count = 0;
@@ -101,6 +106,10 @@ const Create = () => {
             }).then(res => res.json()).then(data => {
                 console.log(data);
             })
+            router.push('/itineraries');
+        } else {
+            console.log('Invalid route');
+            alert('There is an issue in your route! Please make sure that your route is contiguous and your return flights are in a separate itinerary.')
         }
     };
 
