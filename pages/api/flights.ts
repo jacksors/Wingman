@@ -1,6 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {processEnv} from "@next/env";
-import {Flight} from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 const handle = async (req: NextApiRequest, res: NextApiResponse) => {
     const {date, from, to} = req.query;
