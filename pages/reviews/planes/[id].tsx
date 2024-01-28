@@ -46,8 +46,8 @@ export default function PlaneReviews() {
 			}).then((res) => {
 				if (res.status === 200) {
 					res.json().then((data: TailNumber[]) => {
-						if (data.length === 0) return;
-						setTailNumber(data[0]);
+						if (data.length === 0) setTailNumber({ id: -2, number: '', model: '', airlineId: -1 });
+						else setTailNumber(data[0]);
 					});
 				} else {
 					return null;
@@ -58,6 +58,11 @@ export default function PlaneReviews() {
 
 	return (
 		<div className={`flex flex-col ${inter.className} justify-center items-center`}>
+      {
+        tailNumber.id === -2 ?
+        <p className='text-2xl text-center pt-5'>Plane not found!</p>
+        :
+      <>
 			<h1 className='text-5xl text-center pt-4'>Reviews for {tailNumber.model} ({tailNumber.number})</h1>
       {
         averageRating === -1 ?
@@ -115,6 +120,8 @@ export default function PlaneReviews() {
         </ul>
         </>
         }
+        </>
+}
 			<ModeToggle />
 		</div>
 	);

@@ -43,6 +43,7 @@ model Airport {
   reviews        Review[] @relation("AirportReviews")
   incomingRoutes Route[]  @relation("RouteDestination")
   outgoingRoutes Route[]  @relation("RouteOrigin")
+  chatroom    Chatroom?
 }
 
 model Flight {
@@ -68,6 +69,7 @@ model TailNumber {
   airlineId Int
   reviews   Review[]
   flights   Flight[]
+  chatroom    Chatroom?
 }
 
 model Route {
@@ -103,3 +105,29 @@ enum ReviewType {
   AIRPORT
   TAIL_NUMBER
 }
+
+model Chatroom {
+  id           Int       @id @default(autoincrement())
+  type         ChatroomType
+  tailNumber   TailNumber? @relation(fields: [tailNumberId], references: [id])
+  tailNumberId Int?      @unique
+  airport      Airport?   @relation(fields: [airportId], references: [id])
+  airportId    Int?      @unique
+  messages     Message[]
+}
+
+model Message {
+  id          Int       @id @default(autoincrement())
+  content     String
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  chatroom    Chatroom  @relation(fields: [chatroomId], references: [id])
+  chatroomId  Int
+}
+
+enum ChatroomType {
+  PLANE
+  AIRPORT
+}
+
