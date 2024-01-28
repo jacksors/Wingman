@@ -35,11 +35,11 @@ const Me =  () => {
             setLastName(wingmanUser.lastName);
             setUsernameIsSet(true);
         }
+        console.log(wingmanUser);
     }, [wingmanUser]);
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    const handleSubmit: FormEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault();
-        alert(`Username submitted: ${username}`);
         const newUser: User = {
             id: user?.sub!,
             email: user?.email!,
@@ -47,7 +47,6 @@ const Me =  () => {
             firstName: firstName,
             lastName: lastName,
         };
-        // Here you can add the logic to handle the submitted username
         const res = await fetch(`/api/users`, {
             method: 'POST',
             headers: {
@@ -79,35 +78,43 @@ const Me =  () => {
 
     if (!usernameIsSet) return (
         <div className={`flex flex-row justify-center items-center h-screen ${inter.className}`}>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <div className='flex flex-col justify-center items-center'>
-                    <h1>Welcome to Wingman!</h1>
-                    <h2>Please create a username</h2>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={username}
-                        onChange={handleUsernameChange}
-                    />
-                    <label htmlFor="firstName">First Name:</label>
-                    <input
-                        type="text"
-                        id="firstName"
-                        value={firstName}
-                        onChange={handleFirstnameChange}
-                    />
-                    <label htmlFor="lastName">Last Name:</label>
-                    <input
-                        type="text"
-                        id="lastName"
-                        value={lastName}
-                        onChange={handleLastnameChange}
-                    />
-                    <button className="mt-5 bg-accent p-3 rounded" type="submit">Submit</button>
+                    <h1 className="text-4xl">Welcome to Wingman!</h1>
+                    <h2 className="text-xl py-3">We need a few more details to finish you account</h2>
+                    <div className="flex flex-col justify-center items-center gap-3">
+                        <div className="flex flex-row justify-center items-center gap-3">
+                            <label htmlFor="username">Username:</label>
+                            <input
+                                type="text"
+                                id="username"
+                                className="border-2 border-secondary bg-transparent rounded h-10"
+                                onChange={handleUsernameChange}
+                            />
+                        </div>
+                        <div className="flex flex-row justify-center items-center gap-3">
+                            <label htmlFor="firstName">First Name:</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                className="border-2 border-secondary bg-transparent rounded h-10"
+                                onChange={handleFirstnameChange}
+                            />
+                        </div>
+                        <div className="flex flex-row justify-center items-center gap-3">
+                            <label htmlFor="lastName">Last Name:</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                className="border-2 border-secondary bg-transparent rounded h-10"
+                                onChange={handleLastnameChange}
+                            />
+                        </div>
+                    </div>
+                    <button className="mt-5 bg-accent p-3 rounded" type="submit" onClick={handleSubmit}>Submit</button>
                 </div>
             </form>
-            <ModeToggle />
+            <ModeToggle/>
         </div>
     );
 
