@@ -22,7 +22,7 @@ model User {
 
 model Airline {
   id          Int          @id @default(autoincrement())
-  name        String
+  name        String       @unique
   flights     Flight[]
   tailNumbers TailNumber[]
 }
@@ -47,6 +47,8 @@ model Flight {
   route        Route      @relation("RouteFlights", fields: [routeId], references: [id])
   routeId      Int
   users        User[]
+  departTime   DateTime
+  arriveTime   DateTime
 }
 
 model TailNumber {
