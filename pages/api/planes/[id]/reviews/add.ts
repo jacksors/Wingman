@@ -7,7 +7,6 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
         const { id } = req.query;
         if (!id) return res.status(400).json({ message: "Airport ID is required" });
         if (typeof id !== "string") return res.status(400).json({ message: "Airport ID must be a string" });
-        const airportId = parseInt(id);
         const { title, content, rating, userId } = req.body;
         if (!title) return res.status(400).json({ message: "Title is required" });
         if (!content) return res.status(400).json({ message: "Content is required" });
@@ -22,9 +21,9 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
                 title: title,
                 content: content,
                 rating: rating,
-                reviewType: ReviewType.AIRPORT,
-                airportId: airportId,
-                userId: userId
+                reviewType: ReviewType.TAIL_NUMBER,
+                tailNumberId: parseInt(id),
+                userId: userId,
             },
         });
 
