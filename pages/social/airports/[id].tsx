@@ -101,6 +101,10 @@ export default function AirportChatroom() {
 		}
 	};
 
+	if (!user && !isLoading) {
+		router.push('/api/auth/login?returnTo=/user/callback');
+	}
+
 	return (
 		<div className="">
 			{airport?.id === -2 ? (
@@ -117,22 +121,22 @@ export default function AirportChatroom() {
 							messages.map((message) =>
 								message.userId === user?.sub ? (
 									<div key={message.id} className="flex flex-col items-end ">
-										<p className="text-xs text-accent-foreground">
-											{new Date(message.createdAt).toLocaleTimeString()}
-										</p>
 										<Card className="w-fit px-4 py-1 bg-blue-700">
 											<p className='text-white'>{message.content}</p>
 										</Card>
+										<p className="text-xs text-accent-foreground">
+											{new Date(message.createdAt).toLocaleTimeString()}
+										</p>
 									</div>
 								) : (
 									<div key={message.id} className="flex flex-col">
 										<h3 className="text-xs text-gray-500">{message.user.username}</h3>
-										<p className="text-xs text-accent-foreground">
-											{new Date(message.createdAt).toLocaleTimeString()}
-										</p>
 										<Card className="w-fit px-4 py-1 bg-white outline-primary">
 											<p className="text-black">{message.content}</p>
 										</Card>
+										<p className="text-xs text-accent-foreground">
+											{new Date(message.createdAt).toLocaleTimeString()}
+										</p>
 									</div>
 								)
 							)
