@@ -2,6 +2,8 @@ import React, {ChangeEventHandler, FormEventHandler, useEffect, useState} from '
 import {useUser} from "@auth0/nextjs-auth0/client";
 import type { User } from '@prisma/client';
 import { ModeToggle } from '@/components/mode-toggle';
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 
 const Me =  () => {
     const [username, setUsername] = useState('');
@@ -76,7 +78,7 @@ const Me =  () => {
     if (isLoading) return <div>Loading...</div>;
 
     if (!usernameIsSet) return (
-        <div className='flex flex-row justify-center items-center h-screen'>
+        <div className={`flex flex-row justify-center items-center h-screen ${inter.className}`}>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col justify-center items-center'>
                     <h1>Welcome to Wingman!</h1>

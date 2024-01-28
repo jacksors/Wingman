@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useUser} from "@auth0/nextjs-auth0/client";
-import {Itenerary, User} from "@prisma/client";
+import {User} from "@prisma/client";
 import {ItineraryCard, Props} from "@/components/itinerary/itinerarycard";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 const Index = () => {
     const { user, isLoading } = useUser();
@@ -25,25 +27,15 @@ const Index = () => {
         }
     }, [wingmanUser])
 
+
     return (
-        <>
-            {wingmanUser ?
-            <div className='flex flex-row justify-center items-center'>
-                {itineraries.length > 0 ?
-                    itineraries.map(itinerary => {
-                        return (
-                            <button>
-                                <ItineraryCard itinerary={itinerary} />
-                            </button>
-                        )
-                    }) :
-                    <p className='text-2xl'>No Itineraries</p>
-                }
-            </div> :
-            <div className='flex flex-row justify-center items-center h-screen'>
-                <p className='text-2xl'>Please login to view your itineraries</p>
-            </div>}
-        </>
+        <div className='flex flex-col justify-center items-center'>
+            <h1>Current itineraries</h1>
+            {itineraries.map(itinerary => {
+                return <ItineraryCard itinerary={itinerary} />
+            })}
+            <Button><Link href='/itineraries/create'>Create new</Link></Button>
+        </div>
     );
 };
 

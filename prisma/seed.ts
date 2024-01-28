@@ -1,4 +1,4 @@
-import {PrismaClient, ReviewType} from '@prisma/client';
+import {PrismaClient, ReviewType, ChatroomType} from '@prisma/client';
 import { addHours } from 'date-fns';
 
 const prisma = new PrismaClient();
@@ -135,6 +135,28 @@ async function createReviews() {
     }
 }
 
+async function createChatrooms() {
+    const airports = await prisma.airport.findMany();
+    const planes = await prisma.tailNumber.findMany();
+
+    for (const airport of airports) {
+        await prisma.chatroom.create({
+            data: {
+                type: ChatroomType.AIRPORT,
+                airportId: airport.id
+            }
+        });
+    }
+    for (const plane of planes) {
+        await prisma.chatroom.create({
+            data: {
+                type: ChatroomType.PLANE,
+                tailNumberId: plane.id
+            }
+        });
+    }
+}
+
 function main() {
     createAirlines().then(_ => {
         createAirports().then(_ => {
@@ -144,8 +166,10 @@ function main() {
                         createFlights().then(_ => {
                             createReviews().then(_ => {
                                 createIteneraries().then(_ => {
-                                    prisma.$disconnect();
-                                    console.log('Database seeding completed!');
+                                    createChatrooms().then(_ => {
+                                        prisma.$disconnect();
+                                        console.log('Database seeding completed!');
+                                    });
                                 });
                             });
                         });

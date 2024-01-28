@@ -11,21 +11,22 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  username  String   @unique
-  firstName String
-  lastName  String
-  email     String   @unique
+  id          String      @id
+  username    String      @unique
+  firstName   String
+  lastName    String
+  email       String      @unique
   reviews     Review[]
   flights     Flight[]
   iteneraries Itenerary[]
+  messages    Message[]
 }
 
 model Itenerary {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  flights   Flight[]
+  id      Int      @id @default(autoincrement())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+  flights Flight[]
 }
 
 model Airline {
@@ -36,38 +37,40 @@ model Airline {
 }
 
 model Airport {
-  id             Int      @id @default(autoincrement())
-  code           String   @unique
+  id             Int       @id @default(autoincrement())
+  code           String    @unique
   name           String
   location       String
-  reviews        Review[] @relation("AirportReviews")
-  incomingRoutes Route[]  @relation("RouteDestination")
-  outgoingRoutes Route[]  @relation("RouteOrigin")
+  reviews        Review[]  @relation("AirportReviews")
+  incomingRoutes Route[]   @relation("RouteDestination")
+  outgoingRoutes Route[]   @relation("RouteOrigin")
+  chatroom       Chatroom?
 }
 
 model Flight {
-  id           Int        @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   flightNumber String
-  airline      Airline    @relation(fields: [airlineId], references: [id])
+  airline      Airline     @relation(fields: [airlineId], references: [id])
   airlineId    Int
-  tailNumber   TailNumber @relation(fields: [tailNumberId], references: [id])
+  tailNumber   TailNumber  @relation(fields: [tailNumberId], references: [id])
   tailNumberId Int
-  route        Route      @relation("RouteFlights", fields: [routeId], references: [id])
+  route        Route       @relation("RouteFlights", fields: [routeId], references: [id])
   routeId      Int
   users        User[]
-  Iteneraries    Itenerary[]
+  Iteneraries  Itenerary[]
   departTime   DateTime
   arriveTime   DateTime
 }
 
 model TailNumber {
-  id        Int      @id @default(autoincrement())
-  number    String   @unique
+  id        Int       @id @default(autoincrement())
+  number    String    @unique
   model     String
-  airline   Airline  @relation(fields: [airlineId], references: [id])
+  airline   Airline   @relation(fields: [airlineId], references: [id])
   airlineId Int
   reviews   Review[]
   flights   Flight[]
+  chatroom  Chatroom?
 }
 
 model Route {
@@ -94,12 +97,37 @@ model Review {
   tailNumberId Int?
   route        Route?      @relation("RouteReviews", fields: [routeId], references: [id])
   routeId      Int?
-  createdAt    DateTime?    @default(now())
-  updatedAt    DateTime?    @updatedAt
+  createdAt    DateTime?   @default(now())
+  updatedAt    DateTime?   @updatedAt
 }
 
 enum ReviewType {
   ROUTE
   AIRPORT
   TAIL_NUMBER
+}
+
+model Chatroom {
+  id           Int          @id @default(autoincrement())
+  type         ChatroomType
+  tailNumber   TailNumber?  @relation(fields: [tailNumberId], references: [id])
+  tailNumberId Int?         @unique
+  airport      Airport?     @relation(fields: [airportId], references: [id])
+  airportId    Int?         @unique
+  messages     Message[]
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  content    String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  chatroom   Chatroom @relation(fields: [chatroomId], references: [id])
+  chatroomId Int
+}
+
+enum ChatroomType {
+  PLANE
+  AIRPORT
 }

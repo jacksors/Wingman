@@ -3,21 +3,21 @@ import {NextApiRequest, NextApiResponse} from "next";
 
 const handle = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'GET') {
-        const { id } = req.query;
+        const { userId } = req.query;
 
         const user = await prisma.user.findUnique({
             where: {
-                id: id as string
+                id: userId as string
             }
         })
 
         return res.status(200).json(user);
     } else if (req.method === 'PUT') {
-        const { id } = req.query;
+        const { userId } = req.query;
 
         const user = await prisma.user.update({
             where: {
-                id: id as string
+                id: userId as string
             },
             data: {
                 ...req.body
