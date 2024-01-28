@@ -5,7 +5,7 @@ import { Message, TailNumber } from '@prisma/client';
 import { Card } from '@/components/ui/card';
 
 interface MessageWithUsername extends Message {
-	username: string;
+	user: {username: string};
 }
 
 export default function PlaneChatroom() {
@@ -119,7 +119,7 @@ export default function PlaneChatroom() {
 											{new Date(message.createdAt).toLocaleTimeString()}
 										</p>
 										<Card className="w-fit px-4 py-1 bg-white outline-primary">
-											<p className="text-black">{message.username}</p>
+											<p className="text-black">{message.user.username}</p>
 										</Card>
 									</div>
 								)

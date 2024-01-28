@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { ModeToggle } from '@/components/mode-toggle';
 
 interface MessageWithUsername extends Message {
-	username: string;
+	user: { username: string };
 }
 
 export default function AirportChatroom() {
@@ -126,7 +126,7 @@ export default function AirportChatroom() {
 									</div>
 								) : (
 									<div key={message.id} className="flex flex-col">
-										<h3 className="text-xs text-gray-500">{message.username}</h3>
+										<h3 className="text-xs text-gray-500">{message.user.username}</h3>
 										<p className="text-xs text-accent-foreground">
 											{new Date(message.createdAt).toLocaleTimeString()}
 										</p>
