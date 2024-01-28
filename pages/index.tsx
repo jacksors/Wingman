@@ -50,7 +50,7 @@ export default function Home() {
 					) : (
 						<p className="text-4xl">Welcome to Wingman!</p>
 					)}
-					<p className="text-xl">Journey Smarter: Connect, Plan, Fly!</p>
+					<p className="text-xl">Journey Smarter: Plan, Connect, Fly!</p>
 				</div>
 				{user ? (
 					<div className="flex flex-col w-full h-fit pb-11 gap-3 items-center">
