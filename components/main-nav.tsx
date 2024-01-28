@@ -82,12 +82,24 @@ export default function MainNav() {
           <a href="/social" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors text-xl`}>
             Reviews
           </a>
-          <a href="/itinerary" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors text-xl`}>
-            Itinerary
+          <a href="/itineraries" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
+            My Itineraries
           </a>
           <a href="/flight" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors text-xl`}>
             Flight Tracker
           </a>
+          <div className="flex w-full justify-center">
+          {!user ? (
+            <a href={"/api/auth/login?returnTo=/user/callback"}>
+              <Button>Login</Button>
+            </a>
+          ) : (
+            <a href={"/api/auth/logout"}>
+              <Button>Logout</Button>
+            </a>
+          )}
+          
+        </div>
         </nav>
       </div>
 

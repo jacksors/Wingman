@@ -3,6 +3,8 @@ import {useUser} from "@auth0/nextjs-auth0/client";
 import type { User } from '@prisma/client';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Inter } from "next/font/google";
+import { redirect } from 'next/dist/server/api-utils';
+import { useRouter } from 'next/router';
 const inter = Inter({ subsets: ["latin"] });
 
 const Me =  () => {
@@ -10,6 +12,7 @@ const Me =  () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [usernameIsSet, setUsernameIsSet] = useState(false);
+    const router = useRouter();
 
     const { user, error, isLoading } = useUser();
     const [wingmanUser, setWingmanUser] = useState<User>();
@@ -57,6 +60,7 @@ const Me =  () => {
 
         if (res.status === 200) {
             setUsernameIsSet(true);
+            router.push('/');
         } else {
             alert('Something went wrong');
         }
