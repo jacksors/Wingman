@@ -37,3 +37,6 @@ next-env.d.ts
 
 # seed script - for now
 prisma/seed.ts
+
+# idea
+.idea
