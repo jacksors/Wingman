@@ -5,11 +5,15 @@ import { Message, Airport } from '@prisma/client';
 import { Card } from '@/components/ui/card';
 import { ModeToggle } from '@/components/mode-toggle';
 
+interface MessageWithUsername extends Message {
+	username: string;
+}
+
 export default function AirportChatroom() {
 	const router = useRouter();
 	const { id } = router.query;
 	const { user, isLoading } = useUser();
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [messages, setMessages] = useState<MessageWithUsername[]>([]);
 	const [airport, setAirport] = useState<Airport>({
 		id: -1,
 		code: '',
@@ -122,7 +126,7 @@ export default function AirportChatroom() {
 									</div>
 								) : (
 									<div key={message.id} className="flex flex-col">
-										<h3 className="text-xs text-gray-500">{message.userId}</h3>
+										<h3 className="text-xs text-gray-500">{message.username}</h3>
 										<p className="text-xs text-accent-foreground">
 											{new Date(message.createdAt).toLocaleTimeString()}
 										</p>

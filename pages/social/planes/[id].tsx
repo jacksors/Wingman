@@ -4,11 +4,15 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { Message, TailNumber } from '@prisma/client';
 import { Card } from '@/components/ui/card';
 
+interface MessageWithUsername extends Message {
+	username: string;
+}
+
 export default function PlaneChatroom() {
 	const router = useRouter();
 	const { id } = router.query;
 	const { user, isLoading } = useUser();
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [messages, setMessages] = useState<MessageWithUsername[]>([]);
 	const [tailNumber, setTailNumber] = useState<TailNumber>({
 		id: -1,
 		number: '',
@@ -115,7 +119,7 @@ export default function PlaneChatroom() {
 											{new Date(message.createdAt).toLocaleTimeString()}
 										</p>
 										<Card className="w-fit px-4 py-1 bg-white outline-primary">
-											<p className="text-black">{message.content}</p>
+											<p className="text-black">{message.username}</p>
 										</Card>
 									</div>
 								)
