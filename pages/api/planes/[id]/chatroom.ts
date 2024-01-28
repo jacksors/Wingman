@@ -10,6 +10,13 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
         const messages = await prisma.message.findMany({
             where: {
                 chatroomId: parseInt(id) as number,
+            },
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                    }
+                }
             }
         })
 

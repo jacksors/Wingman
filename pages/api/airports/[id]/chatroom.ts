@@ -18,10 +18,6 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             }
         })
-
-        let messagesWithUsername = messages.map(message => {
-        })
-
         return res.status(200).json(messages);
     } else return res.status(405).json({ message: 'Method not allowed' });
 }

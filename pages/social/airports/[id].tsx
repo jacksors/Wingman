@@ -115,7 +115,7 @@ export default function AirportChatroom() {
 				<p className="text-2xl text-center pt-5 w-full h-full">Loading...</p>
 			) : (
 				<>
-					<h1 className="text-center text-4xl pt-8">{airport.name} Chatroom</h1>
+					<h1 className="text-center text-4xl pt-24">{airport.name} Chatroom</h1>
 					<div className="flex flex-col gap-5 px-24 py-4 pb-20">
 						{messages && messages.length !== 0 ? (
 							messages.map((message) =>
@@ -130,7 +130,7 @@ export default function AirportChatroom() {
 									</div>
 								) : (
 									<div key={message.id} className="flex flex-col">
-										<h3 className="text-xs text-gray-500">{message.user.username}</h3>
+										<h3 className="text-xs text-gray-500">{message.user?.username}</h3>
 										<Card className="w-fit px-4 py-1 bg-white outline-primary">
 											<p className="text-black">{message.content}</p>
 										</Card>

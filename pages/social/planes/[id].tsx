@@ -27,6 +27,7 @@ export default function PlaneChatroom() {
 				headers: { 'Content-Type': 'application/json' },
 			});
 			const messages = await response.json();
+			console.log(messages);
 			setMessages(messages);
 			return messages; // Return messages for further processing if needed
 		} catch (err) {
@@ -91,6 +92,10 @@ export default function PlaneChatroom() {
 		router.push('/api/auth/login?returnTo=/user/callback');
 	}
 
+	if (!messages) {
+
+	}
+
 	return (
 		<div className="">
 			{tailNumber?.id === -2 ? (
@@ -101,7 +106,7 @@ export default function PlaneChatroom() {
 				<p className="text-2xl text-center pt-5 w-full h-full">Loading...</p>
 			) : (
 				<>
-					<h1 className="text-center text-4xl pt-8">
+					<h1 className="text-center text-4xl pt-24">
 						{tailNumber.number} Chatroom
 					</h1>
 					<div className="flex flex-col gap-5 px-24 py-4 pb-20">
@@ -118,9 +123,9 @@ export default function PlaneChatroom() {
 									</div>
 								) : (
 									<div key={message.id} className="flex flex-col">
-										<h3 className="text-xs text-gray-500">{message.userId}</h3>
+										<h3 className="text-xs text-gray-500">{message.user?.username}</h3>
 										<Card className="w-fit px-4 py-1 bg-white outline-primary">
-											<p className="text-black">{message.user.username}</p>
+											<p className="text-black">{message.content}</p>
 										</Card>
 										<p className="text-xs text-accent-foreground">
 											{new Date(message.createdAt).toLocaleTimeString()}
