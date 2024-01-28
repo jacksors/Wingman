@@ -1,40 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Wingman Banner](https://i.imgur.com/dPyzg4e.png)
+## Inspiration
+We were inspired by travel companion apps that incorporate social networking, flight review systems, and travel planning help, but unfortunately we discovered that most of these apps are separate from one another. Our mission is to create the ultimate all-in-one travel companion.
 
-## Getting Started
+## What it does
+Wingman revolutionizes travel planning by integrating itinerary creation with a comprehensive review and communication platform. Users can effortlessly craft their travel schedules and access a wealth of information tailored to their specific journey. This platform offers:
 
-First, run the development server:
+1. Personalized Itinerary Building: Easily construct detailed travel plans, including flights and airport stays.
+2. In-Depth Reviews and Ratings: Access user-generated reviews for every airport and aircraft on your itinerary, ensuring informed decisions about your travel choices.
+3. Real-Time Chat Feature: Engage in live discussions with fellow travelers. Share experiences or seek advice about airports, airlines, and in-flight services.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+By merging itinerary management with a robust review and communication system, Wingman offers a singular, user-friendly platform that alleviates the all-too-common stresses of air travel and gives its users the confidence to get excited about travel again.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How we built it
+We began developing Wingman by creating a development pipeline to streamline development and collaboration. Wingman was built using Next.JS, Postgres SQL, Prisma, Git, and deployed to Heroku. 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Challenges we ran into
+The most challenging part of building our application was managing the many objects that an application such as Wingman requires. Wingman requires keeping track of users, airlines, flights, aircraft, and chat messages to name a few of them, and all of these mesh together in interesting ways.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Accomplishments that we're proud of
+We’re extremely proud to have a functioning application that anyone can visit right now at [flywithwingman.com](https://flywithwingman.com) .
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## What we learned
+We learned a ton of the 24 hours of developing Wingman, from using ORMs like Prisma to frontend development in NextJS's React environment; this developing Wing project covered a lot.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## What's next for Wingman
+Next, for Wingman's development, we'd like to implement more planning features, including reserving restaurants, optimizing travel time, and finding activites in the are you're traveling to.
