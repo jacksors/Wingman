@@ -24,8 +24,8 @@ const Index = () => {
             fetch(`/api/users/${wingmanUser.id}/itineraries`).then(res => res.json()).then(data => {
                 let newItems;
                 console.log(data);
-                newItems = data.map(iten => {
-                    const newFlights = iten.flights.map(flight => {
+                newItems = data.map((iten: any) => {
+                    const newFlights = iten.flights.map((flight: any) => {
                         flight.departTime = new Date(flight.departTime);
                         flight.arriveTime = new Date(flight.arriveTime);
                         return flight;
