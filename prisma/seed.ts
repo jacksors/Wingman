@@ -65,6 +65,7 @@ async function createRoutes() {
 
 async function createFlights() {
     const routes = await prisma.route.findMany();
+    console.log(routes);
     const tailNumbers = await prisma.tailNumber.findMany();
     const airlines = await prisma.airline.findMany();
     const users = await prisma.user.findMany();
@@ -91,6 +92,23 @@ async function createFlights() {
     }
 }
 
+async function createIteneraries() {
+    const users = await prisma.user.findMany();
+    const flights = await prisma.flight.findMany();
+
+    for (const user of users) {
+        await prisma.itenerary.create({
+            data: {
+                userId: user.id,
+                flights: {
+                    connect: flights.map(flight => ({ id: flight.id })).filter(_ => Math.random() < 0.5)
+                }
+            }
+        });
+    }
+
+}
+
 async function createReviews() {
     const users = await prisma.user.findMany();
     const airports = await prisma.airport.findMany();
@@ -108,30 +126,34 @@ async function createReviews() {
                     rating: Math.floor(Math.random() * 5) + 1,
                     reviewType: type,
                     userId: user.id,
-                    airportId: type === 'AIRPORT' ? 1: null,
-                    routeId: type === 'ROUTE' ? 0 : null,
-                    tailNumberId: type === 'TAIL_NUMBER' ? 2 : null
+                    airportId: type === 'AIRPORT' ? airports[Math.floor(Math.random() * airports.length)].id : null,
+                    routeId: type === 'ROUTE' ? routes[Math.floor(Math.random() * routes.length)].id : null,
+                    tailNumberId: type === 'TAIL_NUMBER' ? tailNumbers[Math.floor(Math.random() * tailNumbers.length)].id : null
                 }
             });
         }
     }
 }
 
-async function main() {
-    await createAirlines();
-    await createAirports();
-    await createUsers();
-    await createTailNumbers();
-    await createRoutes();
-    await createFlights();
-    await createReviews();
-    console.log('Database seeding completed!');
+function main() {
+    createAirlines().then(_ => {
+        createAirports().then(_ => {
+            createUsers().then(_ => {
+                createTailNumbers().then(_ => {
+                    createRoutes().then(_ => {
+                        createFlights().then(_ => {
+                            createReviews().then(_ => {
+                                createIteneraries().then(_ => {
+                                    prisma.$disconnect();
+                                    console.log('Database seeding completed!');
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
 }
 
 main()
-    .catch((e) => {
-        console.error('Error during seeding:', e);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });

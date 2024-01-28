@@ -16,7 +16,15 @@ model User {
   firstName String
   lastName  String
   email     String   @unique
-  reviews   Review[]
+  reviews     Review[]
+  flights     Flight[]
+  iteneraries Itenerary[]
+}
+
+model Itenerary {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
   flights   Flight[]
 }
 
@@ -47,6 +55,7 @@ model Flight {
   route        Route      @relation("RouteFlights", fields: [routeId], references: [id])
   routeId      Int
   users        User[]
+  Iteneraries    Itenerary[]
   departTime   DateTime
   arriveTime   DateTime
 }

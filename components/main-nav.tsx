@@ -27,7 +27,7 @@ export default function MainNav() {
             <a href="/social" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
               Social
             </a>
-            <a href="/social" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
+            <a href="/reviews" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>
               Reviews
             </a>
             <a href="/itinerary" className={`${theme == "dark" ? "hover:text-gray-300" : "hover:text-gray-600"} transition-colors`}>

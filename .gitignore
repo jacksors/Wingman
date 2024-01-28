@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 # seed script - for now
-prisma/seed-wip.ts
+prisma/seed.ts
