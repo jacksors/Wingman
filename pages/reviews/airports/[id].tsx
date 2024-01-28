@@ -24,7 +24,7 @@ import { set } from 'date-fns';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function AirportReviews() {
-	const { user } = useUser();
+	const { user, isLoading } = useUser();
 	const { id } = useRouter().query;
 	const [reviews, setReviews] = useState<Review[]>([]);
 	const [averageRating, setAverageRating] = useState<number>(0);
@@ -38,6 +38,21 @@ export default function AirportReviews() {
 	const [content, setContent] = useState<string>('');
 	const [rating, setRating] = useState<number>(0);
 	const [users, setUsers] = useState<{ [key: string]: User }>({});
+	const [wingmanUser, setWingmanUser] = useState<User>();
+
+	useEffect(() => {
+		fetch(`/api/users/${user?.sub}`, {
+			method: 'GET',
+		}).then((res) => {
+			if (res.status === 200) {
+				res.json().then((data: User) => {
+					setWingmanUser(data);
+				});
+			} else {
+				return null;
+			}
+		})}, [isLoading]);
+
 
 	const handleSubmit = () => {
 		let newReview = JSON.stringify({
@@ -212,7 +227,7 @@ export default function AirportReviews() {
 												{/* Review */}
 												<div className="flex flex-row gap-2">
 													<div className="flex flex-col">
-														<p>{users[review.userId]?.username}</p>
+														<p>{users[review.userId]?.username ?? (wingmanUser ? wingmanUser.username : '')}</p>
 													</div>
 												</div>
 											</Card>

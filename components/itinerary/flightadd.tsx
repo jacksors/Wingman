@@ -26,7 +26,6 @@ export function FlightAdd({airports, setFlightCallback, deleteCallback}: Props) 
     const [destinationOpen, setDestinationOpen] = React.useState(false);
 
     const [date, setDate] = useState<Date | undefined>(undefined);
-    const inter = Inter({ subsets: ["latin"] });
     const [localFlight, setLocalFlight] = useState<{flightNo: string, date: Date | null, originCode: string, destinationCode: string}>({flightNo: '', date: null, originCode: '', destinationCode: ''});
 
     useEffect(() => {
