@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <MainNav />
-      <main className={`flex min-h-screen flex-col items-center justify-start pt-24 bg- ${inter.className}`}>
+      <main className={`flex min-h-screen flex-col items-center justify-start pt-24 ${inter.className}`}>
         <div className="relative flex flex-col w-full h-fit p-11 gap-3 items-center bg-secondary">
           <img src="/Logo2.png" alt="Wingman Logo" className="w-36 h-36" />
           {user ? 
